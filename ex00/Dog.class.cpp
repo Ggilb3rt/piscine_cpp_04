@@ -1,0 +1,61 @@
+#include "Animal.class.hpp"
+#include "Dog.class.hpp"
+
+/*
+** ------------------------------- CONSTRUCTOR --------------------------------
+*/
+
+Dog::Dog( void ) : Animal()
+{
+	this->type = "Dog";
+	std::cout << "Create " << this->type << std::endl;
+	return ;
+}
+
+Dog::Dog( const Dog & src )
+{
+	*this = src;
+	std::cout << "Create from copy " << this->type << std::endl;
+	return ;
+}
+
+
+/*
+** -------------------------------- DESTRUCTOR --------------------------------
+*/
+
+Dog::~Dog( void )
+{
+	std::cout << "Destroye " << this->type << std::endl;
+	return ;
+}
+
+
+/*
+** --------------------------------- OVERLOAD ---------------------------------
+*/
+
+Dog &				Dog::operator=( Dog const & rhs )
+{
+	if ( this != &rhs )
+	{
+		this->type = rhs.type;
+	}
+	return *this;
+}
+
+
+/*
+** --------------------------------- METHODS ----------------------------------
+*/
+void	Dog::makeSound( void ) const
+{
+	std::cout << "Ouaf !" << std::endl;
+}
+
+/*
+** --------------------------------- ACCESSOR ---------------------------------
+*/
+
+
+/* ************************************************************************** */
