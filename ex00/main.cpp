@@ -33,6 +33,8 @@ int main ( void )
     Dog     dogoCpy(dogo);
     Animal* CCCCpy = new Cat(CCC);
 
+    CCCCpy->makeSound();
+    dogoCpy.makeSound();
     delete CCCCpy;
 
 

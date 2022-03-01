@@ -1,19 +1,21 @@
 #include "WrongAnimal.class.hpp"
+#include "WrongCat.class.hpp"
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
 
-WrongAnimal::WrongAnimal() : type("Unknow WrongAnimal")
+WrongCat::WrongCat( void ) : WrongAnimal()
 {
-	std::cout << "Create WrongAnimal : " << this->type << std::endl;
+	this->type = "WrongCat";
+	std::cout << "Create " << this->type << std::endl;
 	return ;
 }
 
-WrongAnimal::WrongAnimal( const WrongAnimal & src )
+WrongCat::WrongCat( const WrongCat & src )
 {
 	*this = src;
-	std::cout << "Create WrongAnimal from copy :" << this->type << std::endl;
+	std::cout << "Create from copy " << this->type << std::endl;
 	return ;
 }
 
@@ -22,9 +24,9 @@ WrongAnimal::WrongAnimal( const WrongAnimal & src )
 ** -------------------------------- DESTRUCTOR --------------------------------
 */
 
-WrongAnimal::~WrongAnimal()
+WrongCat::~WrongCat( void )
 {
-	std::cout << "Destroye WrongAnimal : " << this->type << std::endl;
+	std::cout << "Destroye " << this->type << std::endl;
 	return ;
 }
 
@@ -33,7 +35,7 @@ WrongAnimal::~WrongAnimal()
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-WrongAnimal &				WrongAnimal::operator=( WrongAnimal const & rhs )
+WrongCat &				WrongCat::operator=( WrongCat const & rhs )
 {
 	if ( this != &rhs )
 	{
@@ -42,28 +44,18 @@ WrongAnimal &				WrongAnimal::operator=( WrongAnimal const & rhs )
 	return *this;
 }
 
-std::ostream &			operator<<( std::ostream & o, WrongAnimal const & i )
-{
-	o << i.getType();
-	return o;
-}
-
 
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
-void	WrongAnimal::makeSound( void ) const
+void	WrongCat::makeSound( void ) const
 {
-	std::cout << "blorp" << std::endl;
+	std::cout << "Miaou !" << std::endl;
 }
-
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-std::string	WrongAnimal::getType( void ) const
-{
-	return (this->type);
-}
+
 
 /* ************************************************************************** */
