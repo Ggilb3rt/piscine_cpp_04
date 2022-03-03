@@ -2,7 +2,7 @@
 
 
 NAME = interface
-FLAGS = -Wall -Wextra -Werror 
+FLAGS = -Wall -Wextra -Werror -g
 STD = -std=c++98
 COMPIL = c++
 SRC = $(shell find './' -name '*.cpp')
@@ -29,6 +29,6 @@ test : all
 	./$(NAME)
 
 test_leaks : all
-	valgrind ./$(NAME)
+	valgrind --leak-check=full ./$(NAME)
 
 .PHONY : all re fclean clean test test_leaks

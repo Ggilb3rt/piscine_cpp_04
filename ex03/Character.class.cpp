@@ -7,7 +7,8 @@
 
 Character::Character() : _name("Anonymous")
 {
-	std::cout << "Create Character " << this->getName() << std::endl;
+	if (DEBUG)
+		std::cout << "Create Character " << this->getName() << std::endl;
 	for (int i = 0; i < MAX_ITEMS; i++)
 		this->_bag[i] = NULL;
 	return ;
@@ -15,7 +16,8 @@ Character::Character() : _name("Anonymous")
 
 Character::Character( std::string const name) : _name(name)
 {
-	std::cout << "Create Character " << this->getName() << std::endl;
+	if (DEBUG)
+		std::cout << "Create Character " << this->getName() << std::endl;
 	for (int i = 0; i < MAX_ITEMS; i++)
 		this->_bag[i] = NULL;
 	return ;
@@ -24,7 +26,9 @@ Character::Character( std::string const name) : _name(name)
 Character::Character( const Character & src )
 {
 	*this = src;
-	std::cout << "Create Character from copy " << this->getName() << std::endl;
+	this->printBag();
+	if (DEBUG)
+		std::cout << "Create Character from copy " << this->getName() << std::endl;
 	return ;
 }
 
@@ -35,9 +39,11 @@ Character::Character( const Character & src )
 
 Character::~Character()
 {
-	std::cout << "Kill Character " << this->getName() << std::endl;
+	if (DEBUG)
+		std::cout << "Kill Character " << this->getName() << std::endl;
 	for (int i = 0; i < MAX_ITEMS; i++)
-		this->_bag[i] = NULL;
+		if (this->_bag[i] != NULL)
+			delete this->_bag[i];
 	return ;
 }
 
@@ -60,7 +66,7 @@ Character &				Character::operator=( Character const & rhs )
 
 std::ostream &			operator<<( std::ostream & o, Character const & i )
 {
-	o << "Name = " << i.getName();
+	o << i.getName();
 	return o;
 }
 
@@ -75,15 +81,22 @@ void				Character::equip( AMateria* m )
 		if (this->_bag[i] == NULL)
 		{
 			this->_bag[i] = m;
-			break;
+			return ;
 		}
 	}
+	if (DEBUG)
+		std::cout << "Can't equip " << m->getType() << std::endl;
 }
 
 void				Character::unequip( int idx )
 {
 	if ( idx < MAX_ITEMS && idx >= 0)
+	{
 		this->_bag[idx] = NULL;
+		return ;
+	}
+	if (DEBUG)
+		std::cout << "Can't unequip in index " << idx << std::endl;
 }
 
 void				Character::use( int idx, ICharacter& target )
@@ -92,16 +105,32 @@ void				Character::use( int idx, ICharacter& target )
 	{
 		if (this->_bag[idx] != NULL)
 			this->_bag[idx]->use( target );
+		else
+			if (DEBUG)
+				std::cout << "Bag[" << idx << "] of " << this->getName() << " is empty" << std::endl;
 	}
 }
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-std::string const & Character::getName( void ) const
+std::string const &	Character::getName( void ) const
 {
 	return this->_name;
 }
 
+void				Character::printBag( void )
+{
+	std::cout << "Bag of " << this->getName() << std::endl;
+	for (int i = 0; i < MAX_ITEMS; i++)
+	{
+		std::cout << "[" << i << "] ";
+		if (this->_bag[i] != NULL)
+			std::cout << this->_bag[i]->getType()
+				<< " " << this->_bag[i] << std::endl;
+		else
+			std::cout << "empty" << std::endl;
+	}
+}
 
 /* ************************************************************************** */

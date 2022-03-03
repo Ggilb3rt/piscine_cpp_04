@@ -9,9 +9,7 @@
 
 class Character : public ICharacter
 {
-
 	public:
-
 		Character( void );
 		Character( std::string const name);
 		Character( Character const & src );
@@ -19,10 +17,12 @@ class Character : public ICharacter
 
 		Character &		operator=( Character const & rhs );
 
-		std::string const & getName( void ) const;
-		void	equip( AMateria* m );
-		void	unequip( int idx );
-		void	use( int idx, ICharacter& target );
+		virtual std::string const & getName( void ) const;
+		virtual void	equip( AMateria* m );
+		virtual void	unequip( int idx );
+		virtual void	use( int idx, ICharacter& target );
+
+		void			printBag( void );
 
 	protected:
 		std::string		_name;

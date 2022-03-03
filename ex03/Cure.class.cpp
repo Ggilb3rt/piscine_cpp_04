@@ -1,31 +1,34 @@
 #include "AMateria.class.hpp"
+#include "Cure.class.hpp"
 
 /*
 ** ------------------------------- CONSTRUCTOR --------------------------------
 */
 
-AMateria::AMateria()
+Cure::Cure( void ) : AMateria("cure")
 {
+	if (DEBUG)
+		std::cout << "Create " << this->getType() << std::endl;
 	return ;
 }
 
-AMateria::AMateria( const AMateria & src )
+Cure::Cure( const Cure & src )
 {
 	*this = src;
+	if (DEBUG)
+		std::cout << "Create from copy " << this->getType() << std::endl;
 	return ;
 }
 
-AMateria::AMateria( std::string const & type ) : _type(type)
-{
-	return ;
-}
 
 /*
 ** -------------------------------- DESTRUCTOR --------------------------------
 */
 
-AMateria::~AMateria()
+Cure::~Cure()
 {
+	if (DEBUG)
+		std::cout << "Destoye " << this->getType() << std::endl;
 	return ;
 }
 
@@ -34,7 +37,7 @@ AMateria::~AMateria()
 ** --------------------------------- OVERLOAD ---------------------------------
 */
 
-AMateria &				AMateria::operator=( AMateria const & rhs )
+Cure &				Cure::operator=( Cure const & rhs )
 {
 	if ( this != &rhs )
 	{
@@ -43,27 +46,28 @@ AMateria &				AMateria::operator=( AMateria const & rhs )
 	return *this;
 }
 
+std::ostream &			operator<<( std::ostream & o, Cure const & i )
+{
+	o << "Type = " << i.getType();
+	return o;
+}
+
 
 /*
 ** --------------------------------- METHODS ----------------------------------
 */
-void				AMateria::use( ICharacter & target )
+AMateria*				Cure::clone( void ) const
 {
-	if (this->getType() == "ice")
-		std::cout << "* shoots an ice bolt at " << target.getName() << " *" << std::endl;
-	else if (this->getType() == "cure")
-		std::cout << "* heals " << target.getName() << "'s wounds *" << std::endl; 	
-	return ;
+	if (DEBUG)
+		std::cout << "cloning " << this->getType() << "...." << std::endl;
+	AMateria*	more_Cure = new Cure();
+	return more_Cure;
 }
 
 
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-std::string const &	AMateria::getType( void ) const
-{
-	return this->_type;
-}
 
 
 /* ************************************************************************** */

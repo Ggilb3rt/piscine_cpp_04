@@ -7,14 +7,16 @@
 
 Ice::Ice( void ) : AMateria("ice")
 {
-	std::cout << "Create " << this->getType() << std::endl;
+	if (DEBUG)
+		std::cout << "Create " << this->getType() << std::endl;
 	return ;
 }
 
 Ice::Ice( const Ice & src )
 {
 	*this = src;
-	std::cout << "Create from copy " << this->getType() << std::endl;
+	if (DEBUG)
+		std::cout << "Create from copy " << this->getType() << std::endl;
 	return ;
 }
 
@@ -25,7 +27,8 @@ Ice::Ice( const Ice & src )
 
 Ice::~Ice()
 {
-	std::cout << "Destoye " << this->getType() << std::endl;
+	if (DEBUG)
+		std::cout << "Destoye " << this->getType() << std::endl;
 	return ;
 }
 
@@ -55,7 +58,8 @@ std::ostream &			operator<<( std::ostream & o, Ice const & i )
 */
 AMateria*				Ice::clone( void ) const
 {
-	std::cout << "cloning " << this->getType() << "...." << std::endl;
+	if (DEBUG)
+		std::cout << "cloning " << this->getType() << "...." << std::endl;
 	AMateria*	more_ice = new Ice();
 	return more_ice;
 }
