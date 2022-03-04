@@ -42,8 +42,10 @@ Character::~Character()
 	if (DEBUG)
 		std::cout << "Kill Character " << this->getName() << std::endl;
 	for (int i = 0; i < MAX_ITEMS; i++)
+	{
 		if (this->_bag[i] != NULL)
 			delete this->_bag[i];
+	}
 	return ;
 }
 

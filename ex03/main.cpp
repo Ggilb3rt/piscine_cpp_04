@@ -51,8 +51,8 @@ int main ( void )
 
     std::cout << std::endl << "----------------- Subject tests ------------------" << std::endl;
     IMateriaSource* src = new MateriaSource();
-    src->learnMateria(new Ice());
-    src->learnMateria(new Cure());
+    src->learnMateria(new Ice());               // create leak
+    src->learnMateria(new Cure());              // create leak
 
     ICharacter* me = new Character("me");
 
@@ -71,27 +71,37 @@ int main ( void )
     delete me;
     delete src;
 
-    std::cout << std::endl << "----------------- Deep copy tests ------------------" << std::endl;
+    std::cout << std::endl << "----------------- Deep copy and MateriaSource tests ------------------" << std::endl;
     Character*      bibou = new Character("bibou");
     MateriaSource   earth;
+    AMateria*       ice_cube = new Ice();
+    AMateria*       pad = new Cure();
 
-    earth.learnMateria(new Cure());
-    earth.learnMateria(new Ice());
-    earth.learnMateria(new Ice());
-    earth.learnMateria(new Cure());
-    // earth.learnMateria(new Ice()); //? creera un leaks car learnMateria ignore la materia quand il est plein. Devrai-je delete ou laisser l'utilisateur gerer ?
+    earth.learnMateria(NULL);
+    earth.learnMateria(pad);
+    earth.learnMateria(ice_cube);
+    earth.learnMateria(ice_cube);
+    earth.learnMateria(pad);
+    earth.learnMateria(ice_cube);
+    delete ice_cube;
+    delete pad;
 
+    bibou->equip(earth.createMateria("prout"));
     bibou->equip(earth.createMateria("ice"));
     bibou->equip(earth.createMateria("cure"));
     bibou->equip(earth.createMateria("cure"));
+
     AMateria* onfloor = bibou->getBagItemAddr(1);
     bibou->unequip(1);
+    
     Character      doppelganger(*bibou);
     doppelganger.equip(earth.createMateria("cure"));
+    
     bibou->printBag();
     doppelganger.printBag();
 
 
+    std::cout << std::endl << "MateriaSources contents" << std::endl;
     MateriaSource   mars(earth);
     earth.printBrain();
     mars.printBrain();
@@ -100,7 +110,6 @@ int main ( void )
     delete bibou;
     return 0;
 }
-
 
 // equip Materia cree la materia
 // unequi ne la delete pas (il faut garder son pointeur quelque part)

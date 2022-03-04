@@ -25,7 +25,10 @@ MateriaSource::~MateriaSource( void )
 {
 	for (int i = 0; i < MAX_ITEMS; i++)
 		if (this->_brain[i] != NULL)
+		{
 			delete this->_brain[i];
+			this->_brain[i] = NULL;
+		}
 	return ;
 }
 
@@ -54,24 +57,27 @@ MateriaSource &				MateriaSource::operator=( MateriaSource const & rhs )
 */
 void						MateriaSource::learnMateria( AMateria* m )
 {
+	if (m == NULL)
+		return ;
 	for (int i = 0; i < MAX_ITEMS; i++)
 	{
 		if (this->_brain[i] == NULL)
 		{
-			this->_brain[i] = m;
+			this->_brain[i] = m->clone();
 			return ;
 		}
 	}
-	std::cout << "Can't learn " << m->getType() << std::endl;
+	if (DEBUG)
+		std::cout << "Can't learn " << m->getType() << std::endl;
 }
 
 AMateria*					MateriaSource::createMateria( std::string const & type )
 {
 	int	i = 0;
 
-	while (type != this->_brain[i]->getType() && i < MAX_ITEMS)
+	while (i < MAX_ITEMS && type != this->_brain[i]->getType())
 		i++;
-	if (this->_brain[i]->getType() == type)
+	if (i < MAX_ITEMS && this->_brain[i]->getType() == type)
 		return this->_brain[i]->clone();
 	else
 		return 0;
