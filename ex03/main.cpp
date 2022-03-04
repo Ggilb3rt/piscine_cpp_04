@@ -17,6 +17,7 @@ int main ( void )
     Character*          hugette = new Character("Hugette");
     Cure                philosophaleStone;
 
+    std::cout << std::endl << "----------------- Basic tests ------------------" << std::endl;
     std::cout << snow << " | " << philosophaleStone << " | "
         << more->getType() << " \\ " << more << std::endl
         << roger.getName() << std::endl;   
@@ -65,20 +66,38 @@ int main ( void )
 
     me->use(0, *bob);
     me->use(1, *bob);
-    // me->Character::printBag();
-
-    ICharacter* doppelganger = me;
-
-    doppelganger->use(0, *me);
 
     delete bob;
     delete me;
     delete src;
 
-    // Segfault because of no deep copy
-//    doppelganger->use(0, *me);
+    std::cout << std::endl << "----------------- Deep copy tests ------------------" << std::endl;
+    Character*      bibou = new Character("bibou");
+    MateriaSource   earth;
+
+    earth.learnMateria(new Cure());
+    earth.learnMateria(new Ice());
+    earth.learnMateria(new Ice());
+    earth.learnMateria(new Cure());
+    // earth.learnMateria(new Ice()); //? creera un leaks car learnMateria ignore la materia quand il est plein. Devrai-je delete ou laisser l'utilisateur gerer ?
+
+    bibou->equip(earth.createMateria("ice"));
+    bibou->equip(earth.createMateria("cure"));
+    bibou->equip(earth.createMateria("cure"));
+    AMateria* onfloor = bibou->getBagItemAddr(1);
+    bibou->unequip(1);
+    Character      doppelganger(*bibou);
+    doppelganger.equip(earth.createMateria("cure"));
+    bibou->printBag();
+    doppelganger.printBag();
 
 
+    MateriaSource   mars(earth);
+    earth.printBrain();
+    mars.printBrain();
+
+    delete onfloor;
+    delete bibou;
     return 0;
 }
 

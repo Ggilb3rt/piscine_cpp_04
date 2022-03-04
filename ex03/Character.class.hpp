@@ -22,7 +22,8 @@ class Character : public ICharacter
 		virtual void	unequip( int idx );
 		virtual void	use( int idx, ICharacter& target );
 
-		void			printBag( void );
+		void			printBag( void ) const;
+		AMateria*		getBagItemAddr( int idx ) const;
 
 	protected:
 		std::string		_name;

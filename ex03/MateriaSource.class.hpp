@@ -21,6 +21,8 @@ class MateriaSource: public IMateriaSource
 
         void		        learnMateria(AMateria* m);
         AMateria*   		createMateria(std::string const & type);
+		
+		void				printBrain( void ) const;
 
 	private:
 		AMateria*			_brain[MAX_ITEMS];

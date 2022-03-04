@@ -23,7 +23,6 @@ MateriaSource::MateriaSource( const MateriaSource & src )
 
 MateriaSource::~MateriaSource( void )
 {
-	// free all materias in brain
 	for (int i = 0; i < MAX_ITEMS; i++)
 		if (this->_brain[i] != NULL)
 			delete this->_brain[i];
@@ -41,10 +40,10 @@ MateriaSource &				MateriaSource::operator=( MateriaSource const & rhs )
 	{
 		for (int i = 0; i < MAX_ITEMS; i++)
 		{
+			this->_brain[i] = NULL;
 			if (rhs._brain[i] != NULL)
 				this->_brain[i] = rhs._brain[i]->clone();
 		}
-		// loop all materias in brain ( create new to deep copy )
 	}
 	return *this;
 }
@@ -81,6 +80,18 @@ AMateria*					MateriaSource::createMateria( std::string const & type )
 /*
 ** --------------------------------- ACCESSOR ---------------------------------
 */
-
+void						MateriaSource::printBrain( void ) const
+{
+	std::cout << "Brain of MateriaSource"<< std::endl;
+	for (int i = 0; i < MAX_ITEMS; i++)
+	{
+		std::cout << "[" << i << "] ";
+		if (this->_brain[i] != NULL)
+			std::cout << this->_brain[i]->getType()
+				<< " " << this->_brain[i] << std::endl;
+		else
+			std::cout << "empty" << std::endl;
+	}
+}
 
 /* ************************************************************************** */

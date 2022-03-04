@@ -26,7 +26,7 @@ Character::Character( std::string const name) : _name(name)
 Character::Character( const Character & src )
 {
 	*this = src;
-	this->printBag();
+	// this->printBag();
 	if (DEBUG)
 		std::cout << "Create Character from copy " << this->getName() << std::endl;
 	return ;
@@ -57,9 +57,14 @@ Character &				Character::operator=( Character const & rhs )
 	if ( this != &rhs )
 	{
 		this->_name = rhs.getName();
-		// lors d'une copie les Materias du Character doivent etre delete avant que les nouvelles ne les remplacent
+		// "lors d'une copie les Materias du Character doivent etre delete avant que les nouvelles ne les remplacent"
+		// je comprends pas la logique pourquoi pas les clone ?
 		for (int i = 0; i < MAX_ITEMS; i++)
-			this->_bag[i] = rhs._bag[i];
+		{
+			this->_bag[i] = NULL;
+			if (rhs._bag[i] != NULL)
+				this->_bag[i] = rhs._bag[i]->clone();
+		}
 	}
 	return *this;
 }
@@ -119,7 +124,13 @@ std::string const &	Character::getName( void ) const
 	return this->_name;
 }
 
-void				Character::printBag( void )
+AMateria*			Character::getBagItemAddr( int idx) const
+{
+	return this->_bag[idx];
+}
+
+
+void				Character::printBag( void ) const
 {
 	std::cout << "Bag of " << this->getName() << std::endl;
 	for (int i = 0; i < MAX_ITEMS; i++)
