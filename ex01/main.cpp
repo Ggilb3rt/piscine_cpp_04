@@ -62,12 +62,16 @@ int main ( void )
     std::cout << std::endl << "------- Copy test -------" << std::endl;
 	std::cout << std::endl << "Anonymous : " << std::endl;
 	const Animal *anonymous = new Dog(rex);
+    std::cout << "rex addr : " << &rex << std::endl;
+    std::cout << "anonymous addr : " << anonymous << std::endl;
 	delete anonymous;
 
     std::cout << std::endl << "Create and Copy Roger : " << std::endl;
     Dog   *roger = new Dog();
     Dog   *rogerCpy = new Dog(*roger);
 
+    std::cout << "Roger addr : " << roger << std::endl;
+    std::cout << "RogerCpy addr : " << rogerCpy << std::endl;
     delete roger;
     rogerCpy->makeSound();
     delete rogerCpy;

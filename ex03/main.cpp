@@ -7,6 +7,31 @@
 #include "Ice.class.hpp"
 #include "Cure.class.hpp"
 
+
+void        subject_test()
+{
+    IMateriaSource* src = new MateriaSource();
+    src->learnMateria(new Ice());               // create leak
+    src->learnMateria(new Cure());              // create leak
+
+    ICharacter* me = new Character("me");
+
+    AMateria* tmp;
+    tmp = src->createMateria("ice");
+    me->equip(tmp);
+    tmp = src->createMateria("cure");
+    me->equip(tmp);
+
+    ICharacter* bob = new Character("bob");
+
+    me->use(0, *bob);
+    me->use(1, *bob);
+
+    delete bob;
+    delete me;
+    delete src;
+}
+
 int main ( void )
 {
     // AMateria         nope;
@@ -18,7 +43,7 @@ int main ( void )
     Cure                philosophaleStone;
 
     std::cout << std::endl << "----------------- Basic tests ------------------" << std::endl;
-    std::cout << snow << " | " << philosophaleStone << " | "
+    std::cout << snow << "\\" << &snow << " | " << philosophaleStone << " | "
         << more->getType() << " \\ " << more << std::endl
         << roger.getName() << std::endl;   
     roger.equip(&snow);
@@ -50,26 +75,7 @@ int main ( void )
 
 
     std::cout << std::endl << "----------------- Subject tests ------------------" << std::endl;
-    IMateriaSource* src = new MateriaSource();
-    src->learnMateria(new Ice());               // create leak
-    src->learnMateria(new Cure());              // create leak
-
-    ICharacter* me = new Character("me");
-
-    AMateria* tmp;
-    tmp = src->createMateria("ice");
-    me->equip(tmp);
-    tmp = src->createMateria("cure");
-    me->equip(tmp);
-
-    ICharacter* bob = new Character("bob");
-
-    me->use(0, *bob);
-    me->use(1, *bob);
-
-    delete bob;
-    delete me;
-    delete src;
+   subject_test();
 
     std::cout << std::endl << "----------------- Deep copy and MateriaSource tests ------------------" << std::endl;
     Character*      bibou = new Character("bibou");
@@ -113,6 +119,3 @@ int main ( void )
 
 // equip Materia cree la materia
 // unequi ne la delete pas (il faut garder son pointeur quelque part)
-
-// en cas de copie il faut delete les materias du premier avant de les creer dans le second
-// comme si playerX donnait le contenu de son inventaire ??
