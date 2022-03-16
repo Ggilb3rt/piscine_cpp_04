@@ -59,8 +59,6 @@ Character &				Character::operator=( Character const & rhs )
 	if ( this != &rhs )
 	{
 		this->_name = rhs.getName();
-		// "lors d'une copie les Materias du Character doivent etre delete avant que les nouvelles ne les remplacent"
-		// je comprends pas la logique pourquoi pas les clone ?
 		for (int i = 0; i < MAX_ITEMS; i++)
 		{
 			this->_bag[i] = NULL;
