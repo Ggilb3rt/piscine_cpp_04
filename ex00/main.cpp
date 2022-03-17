@@ -29,7 +29,7 @@ int main ( void )
     CCC.makeSound();
     unicorn.makeSound();
 
-    std::cout << std::endl << "From copy" << std::endl;
+    std::cout << std::endl << "----------From copy------------" << std::endl;
     Dog     dogoCpy(dogo);
     Animal* CCCCpy = new Cat(CCC);
 
@@ -38,9 +38,10 @@ int main ( void )
     delete CCCCpy;
 
 
-    std::cout << std::endl << "Wrong Animal" << std::endl;
+    std::cout << std::endl << "----------Wrong Animal------------" << std::endl;
     const WrongAnimal*  poney = new WrongCat();
 
+    std::cout << poney->getType() << " " << std::endl;
     poney->makeSound();
     delete poney;
 
