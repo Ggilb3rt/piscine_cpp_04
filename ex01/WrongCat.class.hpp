@@ -1,9 +1,9 @@
-#ifndef WrongCat_CLASS_HPP
-# define WrongCat_CLASS_HPP
+#ifndef WRONGCAT_CLASS_HPP
+# define WRONGCAT_CLASS_HPP
 
 # include <iostream>
 # include <string>
-# include "Animal.class.hpp"
+# include "WrongAnimal.class.hpp"
 
 class WrongCat : public WrongAnimal
 {
