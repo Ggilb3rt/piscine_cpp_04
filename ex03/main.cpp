@@ -43,7 +43,7 @@ int main ( void )
     Cure                philosophaleStone;
 
     std::cout << std::endl << "----------------- Basic tests ------------------" << std::endl;
-    std::cout << snow << "\\" << &snow << " | " << philosophaleStone << " | "
+    std::cout << snow << "\\" << &snow << " | " << philosophaleStone << " | clone "
         << more->getType() << " \\ " << more << std::endl
         << roger.getName() << std::endl;   
     roger.equip(&snow);
@@ -104,6 +104,7 @@ int main ( void )
     doppelganger.equip(earth.createMateria("cure"));
     
     bibou->printBag();
+    delete bibou;
     doppelganger.printBag();
 
 
@@ -113,9 +114,8 @@ int main ( void )
     mars.printBrain();
 
     delete onfloor;
-    delete bibou;
     return 0;
 }
 
-// equip Materia cree la materia
+// equip MateriaSource cree la materia
 // unequi ne la delete pas (il faut garder son pointeur quelque part)
